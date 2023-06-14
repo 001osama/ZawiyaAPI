@@ -61,7 +61,6 @@ namespace ZawiyaAPI.Controllers
         }
 
 
-        //[Authorize(Roles = "seller")]
         [HttpGet("{id:int}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -100,7 +99,7 @@ namespace ZawiyaAPI.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "admin, seller")]
+        [Authorize(Roles = "admin, seller")]
         [Authorize(Roles = "seller")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -173,7 +172,7 @@ namespace ZawiyaAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -207,7 +206,7 @@ namespace ZawiyaAPI.Controllers
 
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut("{id:int}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -291,6 +290,8 @@ namespace ZawiyaAPI.Controllers
             return _response;
         }
 
+
+        [Authorize(Roles = "admin")]
         [HttpPatch("{id:int}", Name = "UpdatePartialProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

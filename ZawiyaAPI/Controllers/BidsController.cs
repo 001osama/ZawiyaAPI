@@ -36,7 +36,7 @@ namespace ZawiyaAPI.Controllers
 
 
         [HttpGet]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -98,7 +98,7 @@ namespace ZawiyaAPI.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "buyer")]
+        [Authorize(Roles = "buyer")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
