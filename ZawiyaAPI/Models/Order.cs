@@ -9,11 +9,13 @@ namespace ZawiyaAPI.Models
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
-        public DateTime? OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
         public int TotalAmount { get; set; }
-        public string Status { get; set; }
+        public string? Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public string? SessionId { get; set; }
+        public string? PaymentIntentId { get; set; }
 
         [ForeignKey("Buyer")]
         public int BuyerId { get; set; }

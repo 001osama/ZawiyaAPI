@@ -20,7 +20,6 @@ namespace ZawiyaAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-
         public ProductsController(IProductRepository dbProduct, IUserRepository dbUser, IMapper mapper, IWebHostEnvironment hostEnvironment)
         {
             this._response = new();
@@ -62,7 +61,6 @@ namespace ZawiyaAPI.Controllers
         }
 
 
-        //[Authorize(Roles = "seller")]
         [HttpGet("{id:int}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -101,7 +99,7 @@ namespace ZawiyaAPI.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "admin, seller")]
+        [Authorize(Roles = "admin, seller")]
         [Authorize(Roles = "seller")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -123,9 +121,13 @@ namespace ZawiyaAPI.Controllers
                 {
                     return BadRequest(createDTO);
                 }
+                //var claimsIdentity = (ClaimsIdentity)User.Identity;
+                //var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                //var role = claimsIdentity.RoleClaimType;
 
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var sellerId = await _dbUser.GetSellerIdAsync(userId);
+                var role = this.User.FindFirstValue(ClaimTypes.Role);
+                var sellerId = await _dbUser.GetRoleIdAsync(userId, role);
                 
                 if (sellerId == 0) 
                 {
@@ -170,7 +172,7 @@ namespace ZawiyaAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -204,7 +206,7 @@ namespace ZawiyaAPI.Controllers
 
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut("{id:int}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -212,7 +214,7 @@ namespace ZawiyaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromBody] ProductUpdateDTO updateDTO)
+        public async Task<ActionResult<APIResponse>> UpdateProduct(int id, [FromForm] ProductUpdateDTO updateDTO)
         {
             try
             {
@@ -220,30 +222,64 @@ namespace ZawiyaAPI.Controllers
                 {
                     return BadRequest();
                 }
+                
+                //var claimsIdentity = (ClaimsIdentity)User.Identity;
+                //var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                //var role = claimsIdentity.RoleClaimType;
+
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var sellerId = await _dbUser.GetSellerIdAsync(userId);
+                var role = this.User.FindFirstValue(ClaimTypes.Role);
+
+                var sellerId = await _dbUser.GetRoleIdAsync(userId, role);
                 if (sellerId == 0)
                 {
                     ModelState.AddModelError("ErrorMessage", "Seller Doesnot Exist");
                     return BadRequest(ModelState);
                 }
+                string wwwRootPath = _hostEnvironment.WebRootPath;
 
-                //if (updateDTO.ImageUrl != null)
-                //{
-                //    var oldImagePath = Path.Combine(wwwRootPath, updateDTO.ImageUrl.TrimStart('\\'));
-                //    if (System.IO.File.Exists(oldImagePath))
-                //    {
-                //        System.IO.File.Delete(oldImagePath);
-                //    }
-                //}
+                var oldProduct = await _dbProduct.GetAsync(u => u.ProductId == id);
+                if (updateDTO.ImageFile != null)
+                {
 
-                Product product = _mapper.Map<Product>(updateDTO);
-                product.UpdatedDate = DateTime.Now;
-                product.SellerId = sellerId;
-                await _dbProduct.UpdateAsync(product);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                    var oldImagePath = Path.Combine(wwwRootPath, oldProduct.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images\products");
+                    var extension = Path.GetExtension(updateDTO.ImageFile.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        await updateDTO.ImageFile.CopyToAsync(fileStreams);
+                    }
+                    Product product = _mapper.Map<Product>(updateDTO);
+                    product.UpdatedDate = DateTime.Now;
+                    product.SellerId = sellerId;
+                    product.ImageUrl = @"\images\products\" + fileName + extension;
+
+                    await _dbProduct.UpdateAsync(product);
+                    _response.StatusCode = HttpStatusCode.NoContent;
+                    _response.IsSuccess = true;
+                    return Ok(_response);
+                }
+                else
+                {
+                    Product product = _mapper.Map<Product>(updateDTO);
+                    product.UpdatedDate = DateTime.Now;
+                    product.SellerId = sellerId;
+                    product.ImageUrl = oldProduct.ImageUrl;
+
+                    await _dbProduct.UpdateAsync(product);
+                    _response.StatusCode = HttpStatusCode.NoContent;
+                    _response.IsSuccess = true;
+                    return Ok(_response);
+                }
+
+                
             }
 
             catch (Exception ex)
@@ -254,6 +290,8 @@ namespace ZawiyaAPI.Controllers
             return _response;
         }
 
+
+        [Authorize(Roles = "admin")]
         [HttpPatch("{id:int}", Name = "UpdatePartialProduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -277,8 +315,9 @@ namespace ZawiyaAPI.Controllers
             Product model = _mapper.Map<Product>(productDTO);
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var sellerId = await _dbUser.GetSellerIdAsync(userId);
+            var role = this.User.FindFirstValue(ClaimTypes.Role);
 
+            var sellerId = await _dbUser.GetRoleIdAsync(userId, role);
             if (sellerId == 0)
             {
                 ModelState.AddModelError("ErrorMessage", "Seller Doesnot Exist");

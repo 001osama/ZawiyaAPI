@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZawiyaAPI.Data;
 
@@ -11,9 +12,10 @@ using ZawiyaAPI.Data;
 namespace ZawiyaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230612075316_addCartItemToDB")]
+    partial class addCartItemToDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,34 +268,34 @@ namespace ZawiyaAPI.Migrations
                         {
                             BidId = 1,
                             Amount = 20,
-                            BidTime = new DateTime(2023, 6, 19, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2824),
+                            BidTime = new DateTime(2023, 6, 19, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5899),
                             BuyerId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2825),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5900),
                             IsCurrentBid = true,
                             ProductId = 1,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2826)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5901)
                         },
                         new
                         {
                             BidId = 2,
                             Amount = 80,
-                            BidTime = new DateTime(2023, 6, 19, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2832),
+                            BidTime = new DateTime(2023, 6, 19, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5903),
                             BuyerId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2833),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5904),
                             IsCurrentBid = true,
                             ProductId = 2,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2834)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5905)
                         },
                         new
                         {
                             BidId = 3,
                             Amount = 100,
-                            BidTime = new DateTime(2023, 6, 20, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2835),
+                            BidTime = new DateTime(2023, 6, 20, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5907),
                             BuyerId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2836),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5907),
                             IsCurrentBid = true,
                             ProductId = 2,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2837)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5908)
                         });
                 });
 
@@ -334,9 +336,9 @@ namespace ZawiyaAPI.Migrations
                         {
                             BuyerId = 1,
                             Address = "987 Pine Street",
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2741),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5826),
                             PhoneNumber = "555-3456",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2743),
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5827),
                             UserId = "7a0c78c3-5ae4-4a6c-bb53-acc06c3d3889"
                         });
                 });
@@ -361,17 +363,14 @@ namespace ZawiyaAPI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShoppingCartsId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("CartId");
 
-                    b.HasIndex("ShoppingCartsId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
@@ -406,50 +405,50 @@ namespace ZawiyaAPI.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2885),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6038),
                             Description = "The art of decorating fabric or other materials using a needle and thread, often showcasing intricate patterns and designs. A prominent craft in Pakistan, known for its vibrant and detailed work.",
                             Name = "Embroidery",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2886)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6039)
                         },
                         new
                         {
                             CategoryId = 2,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2888),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6041),
                             Description = "The skill of carving, shaping, or creating objects from wood. Woodwork in Pakistan displays a rich heritage of craftsmanship, incorporating traditional motifs and techniques into furniture, decorative items, and architectural elements.",
                             Name = "Woodwork",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2889)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6042)
                         },
                         new
                         {
                             CategoryId = 3,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2890),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6043),
                             Description = "The art of making objects, such as pottery, from clay and firing them in a kiln. Pakistani ceramics encompass a wide range of styles, from traditional terracotta pottery to intricate hand-painted tiles and delicate porcelain.",
                             Name = "Ceramics",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2891)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6044)
                         },
                         new
                         {
                             CategoryId = 4,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2892),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6045),
                             Description = "The artistic writing of languages, often using special pens or brushes. Calligraphy holds a special place in Pakistani art and culture, with beautiful Arabic and Urdu calligraphy being featured in religious texts, architecture, and various forms of artistic expression.",
                             Name = "Calligraphy",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2893)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6046)
                         },
                         new
                         {
                             CategoryId = 5,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2894),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6047),
                             Description = "The craft of adorning fabrics with small mirror pieces, creating intricate patterns and reflecting light. Mirror work, also known as shisha embroidery, is widely practiced in Pakistan, particularly in regions like Sindh and Gujarat, and is used in clothing, accessories, and home decor.",
                             Name = "Mirror Work",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2895)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6048)
                         },
                         new
                         {
                             CategoryId = 6,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2896),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6049),
                             Description = "The art of shaping and manipulating metals, often involving techniques such as casting, engraving, and filigree. Pakistani metalwork showcases the country's rich heritage, with skilled artisans creating intricate jewelry, decorative items, and utensils using metals like gold, silver, and brass.",
                             Name = "Metal Work",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2896)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6049)
                         });
                 });
 
@@ -496,21 +495,21 @@ namespace ZawiyaAPI.Migrations
                         {
                             OrderId = 1,
                             BuyerId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2798),
-                            OrderDate = new DateTime(2023, 6, 20, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2792),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5877),
+                            OrderDate = new DateTime(2023, 6, 20, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5872),
                             Status = "Completed",
                             TotalAmount = 20,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2799)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5879)
                         },
                         new
                         {
                             OrderId = 2,
                             BuyerId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2802),
-                            OrderDate = new DateTime(2023, 6, 20, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2801),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5882),
+                            OrderDate = new DateTime(2023, 6, 20, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5880),
                             Status = "Completed",
                             TotalAmount = 80,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2803)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5883)
                         });
                 });
 
@@ -546,18 +545,18 @@ namespace ZawiyaAPI.Migrations
                         new
                         {
                             OrderDetailId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2767),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5852),
                             OrderId = 1,
                             ProductId = 1,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2769)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5853)
                         },
                         new
                         {
                             OrderDetailId = 2,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2771),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5855),
                             OrderId = 2,
                             ProductId = 2,
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2772)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5856)
                         });
                 });
 
@@ -621,10 +620,10 @@ namespace ZawiyaAPI.Migrations
                         new
                         {
                             ProductId = 1,
-                            BidEndTime = new DateTime(2023, 6, 20, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2855),
-                            BidStartTime = new DateTime(2023, 6, 19, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2859),
+                            BidEndTime = new DateTime(2023, 6, 20, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6007),
+                            BidStartTime = new DateTime(2023, 6, 19, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6011),
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2857),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6009),
                             CurrentPrice = 20,
                             Description = "Handmade pillow cover featuring intricate embroidery work",
                             ImageUrl = "https://images.pexels.com/photos/12814967/pexels-photo-12814967.jpeg",
@@ -632,15 +631,15 @@ namespace ZawiyaAPI.Migrations
                             SellerId = 1,
                             StartingPrice = 16,
                             Status = "Active",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2858)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6010)
                         },
                         new
                         {
                             ProductId = 2,
-                            BidEndTime = new DateTime(2023, 6, 20, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2862),
-                            BidStartTime = new DateTime(2023, 6, 19, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2865),
+                            BidEndTime = new DateTime(2023, 6, 20, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6014),
+                            BidStartTime = new DateTime(2023, 6, 19, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6017),
                             CategoryId = 4,
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2863),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6016),
                             CurrentPrice = 80,
                             Description = "Elegant calligraphy art piece showcasing intricate Arabic script",
                             ImageUrl = "https://images.pexels.com/photos/15287945/pexels-photo-15287945.jpeg",
@@ -648,7 +647,7 @@ namespace ZawiyaAPI.Migrations
                             SellerId = 1,
                             StartingPrice = 70,
                             Status = "Active",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2864)
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(6016)
                         });
                 });
 
@@ -689,9 +688,9 @@ namespace ZawiyaAPI.Migrations
                         {
                             SellerId = 1,
                             Address = "789 Oak Street",
-                            CreatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2548),
+                            CreatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5638),
                             PhoneNumber = "555-9012",
-                            UpdatedDate = new DateTime(2023, 6, 12, 15, 25, 31, 890, DateTimeKind.Local).AddTicks(2560),
+                            UpdatedDate = new DateTime(2023, 6, 12, 12, 53, 15, 439, DateTimeKind.Local).AddTicks(5651),
                             UserId = "45c3802c-8f4d-4a2d-a9f6-2090b70bd12b"
                         });
                 });
@@ -804,15 +803,15 @@ namespace ZawiyaAPI.Migrations
 
             modelBuilder.Entity("ZawiyaAPI.Models.CartItem", b =>
                 {
-                    b.HasOne("ZawiyaAPI.Models.Product", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                    b.HasOne("ZawiyaAPI.Models.ShoppingCart", "ShoppingCarts")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZawiyaAPI.Models.ShoppingCart", "ShoppingCarts")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ShoppingCartsId")
+                    b.HasOne("ZawiyaAPI.Models.Product", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

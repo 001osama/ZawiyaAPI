@@ -12,6 +12,8 @@ namespace ZawiyaAPI
             CreateMap<Product, ProductCreateDTO>().ReverseMap();
             CreateMap<Product, ProductUpdateDTO>().ReverseMap();
 
+            CreateMap<Bid, BidDTO>().ReverseMap();
+            CreateMap<Bid, BidCreateDTO>().ReverseMap();
 
             CreateMap<ApplicationUser, UserDTO>().ReverseMap();   
         }

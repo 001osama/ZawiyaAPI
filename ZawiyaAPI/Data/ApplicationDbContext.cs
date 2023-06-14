@@ -16,9 +16,12 @@ namespace ZawiyaAPI.Data
         public DbSet<Buyer> Buyers { get; set; } 
         public DbSet<Category> Categories { get; set; } 
         public DbSet<Order> Orders { get; set; } 
-        public DbSet<OrderDetail> Orderdetail { get; set; } 
+        public DbSet<OrderDetail> OrderDetails { get; set; } 
         public DbSet<Product> Products { get; set; } 
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -104,6 +107,17 @@ namespace ZawiyaAPI.Data
                     BidId = 2,
                     Amount = 80,
                     BidTime = DateTime.Now.AddDays(7),
+                    IsCurrentBid = true,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
+                    BuyerId = 1,
+                    ProductId = 2
+                },
+                new Bid()
+                {
+                    BidId = 3,
+                    Amount = 100,
+                    BidTime = DateTime.Now.AddDays(8),
                     IsCurrentBid = true,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,

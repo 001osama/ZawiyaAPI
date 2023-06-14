@@ -30,12 +30,40 @@ namespace ZawiyaAPI.Repository
 
         }
 
-        public async Task<int> GetSellerIdAsync(string userId)
+        public async Task<ApplicationUser> GetUser(int buyerId)
         {
-            var seller = _db.Sellers.FirstOrDefault(x => x.UserId == userId);
-            if (seller != null)
+            var buyer = _db.Buyers.FirstOrDefault(x => x.BuyerId == buyerId);
+            if (buyer == null)
             {
-                return seller.SellerId;
+                return null;
+            }
+            var user = _db.ApplicationUsers.FirstOrDefault(x => x.Id == buyer.UserId);
+            if(user != null)
+            {
+                return user;
+            }
+            return null;
+        }
+
+        public async Task<int> GetRoleIdAsync(string userId, string role)
+        {
+            if(role == "seller")
+            {
+                var seller = _db.Sellers.FirstOrDefault(x => x.UserId == userId);
+                if (seller != null)
+                {
+                    return seller.SellerId;
+                }
+                return 0;
+            }
+            if (role == "buyer")
+            {
+                var buyer = _db.Buyers.FirstOrDefault(x => x.UserId == userId);
+                if (buyer != null)
+                {
+                    return buyer.BuyerId;
+                }
+                return 0;
             }
             return 0;
         }

@@ -11,6 +11,7 @@ namespace ZawiyaAPI.Models
         public int OrderDetailId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public int Price { get; set; }
 
         [ForeignKey("Order")]
         public int OrderId { get; set; }
